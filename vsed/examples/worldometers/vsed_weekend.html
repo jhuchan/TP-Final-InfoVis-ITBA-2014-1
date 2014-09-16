@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <title></title>
+    
+    <script type="text/javascript" src="../lib/utils.js"></script>
+    <script type="text/javascript" src="../../js/_VisualSedimentation.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+	
+	<style>
+	.legend{
+	    margin-bottom: 10px;
+		}
+	</style>
+    
+  </head>
+
+
+  <body>
+      <div>
+        <div class="legend"><strong>Fines de semana o feriados</strong></div>
+
+      <div id="headerLabel"></div>
+      <div id="demo"></div>
+
+
+     <script>
+
+     // Define data and legend 
+     // unit 
+     var oneMinute  = 60
+    
+     // data 
+     var data=[
+         
+                {
+                  label:"Mañana",
+                  value:0.0425,
+                  unit:oneMinute,
+                  size:5,
+                  old:null,
+                  ttl:0.999,
+                },
+                {
+                  label:"Tarde",
+                  value:0.1089,
+                  unit:oneMinute,
+                  size:5,
+                  old:null,
+                  ttl:0.999,
+                },
+                {
+                  label:"T/N",
+                  value:0.1008,
+                  unit:oneMinute,
+                  size:5,
+                  old:null,
+                  ttl:0.999,
+                },
+                {
+                  label:"Noche",
+                  value:0.0370,
+                  unit:oneMinute,
+                  size:5,
+                  old:null,
+                  ttl:0.999,
+                }
+        ]
+
+
+
+      // Setting normal chart 
+      sceneSetting = {
+        x:0,
+        y:0,
+        width:300,
+        height:100,
+        data:{
+              model:[],
+              stream:{}
+            },
+        sedimentation:{
+          token:{
+            size:{original:20,minimum:2}
+          },
+        }
+      }
+
+      // create column by datas  
+      for (var i = data.length - 1; i >= 0; i--) {
+        sceneSetting.data.model.push({label:data[i].label})
+      };
+
+      // customize tokens before create it  
+      function createToken(_this,i,data){
+         var token = { 
+            category:i,
+            callback:{
+             draw:function(token){
+               var size = token.attr("size")
+               token.attr("size",size*data.ttl)
+             }
+            }
+          }
+        if(typeof(data.texture)!="undefined"){
+         token.texture = {}
+         token.texture.src = data.texture
+        }
+        if(typeof(data.size)!="undefined"){
+          token.size = data.size
+        }
+        _this.addToken(token);
+      }
+
+      // setup the scene
+      var scene    = $("#demo").vs(sceneSetting).data('visualSedimentation');
+
+      // setup the clock 
+      var time     = new Date(),secondsToday,secondsSinceNewYear
+
+      // start the clock 
+      var clock    = window.setInterval(
+                              function (){
+                                   time = new Date()
+                                   previousYear = new Date(2010,12,0,06,0,0,00)
+                                   diffPreviousYear = time.getTime()-previousYear.getTime()
+                                   secondsToday = (time.getHours()*60*60) + (time.getMinutes()*60) + time.getSeconds()
+                                   milliSecondsToday= (time.getHours()*60*60*1000) + (time.getMinutes()*60*1000) + time.getSeconds()*1000+time.getMilliseconds() 
+                                  
+                                  for (var i = data.length - 1; i >= 0; i--) {
+                                    data[i].now = Math.round(milliSecondsToday*data[i].value/1000)
+                                    if(data[i].now!=data[i].old) createToken(scene,i,data[i])
+                                    data[i].old = data[i].now
+                                  };
+                                 }
+                                 , 1); 
+  
+    // add legends 
+    var labeling =function(setting,container){
+       var divWidth = Math.round(setting.width/setting.data.model.length)
+       for (var i = setting.data.model.length-1; i >= 0 ; i--) {
+         $('#'+container).append('<div id="'+setting.data.model[i].label.replace('/', '_').replace('ñ','n')+'" style="width:'+divWidth+'px;">'+setting.data.model[i].label+'</div>');
+       }
+    }
+
+    labeling(sceneSetting,"headerLabel")
+
+
+
+</script>
+
+  </body>
+</html>

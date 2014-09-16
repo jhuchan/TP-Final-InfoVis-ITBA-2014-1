@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+		<title></title>
+		<style type="text/css"></style>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+
+			//Width and height
+			var w = 900;
+			var h = 600;
+
+			//Data
+			var dataset = {
+				nodes: [
+					{ name: "PALERMO", cant: 335623 },
+                    { name: "RECOLETA", cant: 232330 },
+                    { name: "SAN NICOLAS", cant: 208367 },
+                    { name: "BALVANERA", cant: 168186 },
+                    { name: "CABALLITO", cant: 141560 },
+                    { name: "ALMAGRO", cant: 129621 },
+                    { name: "BELGRANO", cant: 118143 },
+                    { name: "MONSERRAT", cant: 106685 },
+                    { name: "VILLA CRESPO", cant: 105518 },
+                    { name: "RETIRO", cant: 86456 },
+                    { name: "FLORES", cant: 73439 },
+                    { name: "VILLA URQUIZA", cant: 59835 },
+                    { name: "COLEGIALES", cant: 53205 },
+                    { name: "NUÑEZ", cant: 44090 },
+                    { name: "VILLA DEVOTO", cant: 39522 },
+                    { name: "CHACARITA", cant: 37252 },
+                    { name: "CONSTITUCION", cant: 35499 },
+                    { name: "SAAVEDRA", cant: 33809 },
+                    { name: "BARRACAS", cant: 33772 }
+				],
+				edges: [
+				    { source: 0, target: 1 },
+                    { source: 1, target: 2 },
+                    { source: 2, target: 3 },
+                    { source: 3, target: 4 },
+                    { source: 4, target: 5 },
+                    { source: 5, target: 6 },
+                    { source: 6, target: 7 },
+                    { source: 7, target: 8 },
+                    { source: 8, target: 9 },
+                    { source: 9, target: 10 },
+                    { source: 10, target: 11 },
+                    { source: 11, target: 12 },
+                    { source: 12, target: 13 },
+                    { source: 13, target: 14 },
+                    { source: 14, target: 15 },
+                    { source: 15, target: 16 },
+                    { source: 16, target: 17 },
+                    { source: 17, target: 18 }
+				]
+			};
+
+			//Initialize the force layout, using the nodes and edges in dataset
+			var force = d3.layout.force()
+								 .nodes(dataset.nodes)
+								 .links(dataset.edges)
+								 .size([w, h])
+								 .linkDistance([70])
+								 .charge([-500])
+                                 .gravity(0.1)
+								 .start();
+          
+          var tamano = dataset.nodes[0].cant/45;
+
+			var colors = d3.scale.category20();
+          
+            var formato = d3.format(",d");
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+			
+			//Create edges as lines
+			var edges = svg.selectAll("line")
+				.data(dataset.edges)
+				.enter()
+				.append("line")
+				.style("stroke", "#ccc")
+				.style("stroke-width", 1);
+			
+			//Create nodes as circles
+			var nodes = svg.selectAll("circle")
+				.data(dataset.nodes)
+				.enter()
+				.append("circle")
+                .attr("id",function(d,i) {return "N"+d.name.replace(' ', '_');})
+                .attr("r", 1)
+				.style("fill", function(d, i) {
+					return colors(i);
+				})
+                .on("mouseover", function(d, i){d3.select(this)
+                  .transition().duration(10)
+                  .style("opacity", 0.7)
+                    d3.select("#T"+d.name.replace(' ', '_'))
+                    .transition().duration(10)
+                    .style("font-weight", "bold");})
+                .on("mouseout", function(d, i){d3.select(this)
+				  .transition().duration(10)
+                  .style("opacity", 1)
+                    d3.select("#T"+d.name.replace(' ', '_'))
+                    .transition().duration(10)
+                    .style("font-weight", "normal");})
+				.call(force.drag);
+
+                nodes.transition().duration(3000).attr("r", function(d) {
+                    return d.cant/tamano;
+                });
+          
+            //Create labels as text
+            var text = svg.selectAll("text")
+                  .data(dataset.nodes)
+                  .enter()
+                  .append("text")
+                  .attr("id",function(d,i) {return "T"+d.name.replace(' ', '_');})
+                  .text(function(d) { return d.name; })
+				  .style("fill", function(d, i) {
+					return "black";
+				  })
+                  .style("font-family", function(d, i) {
+					return "verdana";
+				  })
+                  .attr("font-size", function(d, i) {
+					return 9;
+				  })
+                  .style("text-anchor", function(d, i) {
+					return "middle";
+				  })
+                  .on("mouseover", function(d, i){
+                    d3.select("#N"+d.name.replace(' ', '_'))
+                    .transition().duration(10)
+                    .style("opacity", 0.7)
+                    d3.select(this)
+                    .transition()
+                    .style("font-weight", "bold");})
+                  .on("mouseout", function(d, i){
+                    d3.select("#N"+d.name.replace(' ', '_'))
+				    .transition().duration(10)
+                    .style("opacity", 1)
+                    d3.select(this)
+                    .transition()
+                    .style("font-weight", "normal");})
+				  .call(force.drag);
+          
+            //Create tooltip for nodes
+            nodes.append("title")
+                 .text(function(d, i) {
+                    return formato(d.cant)+" consultas";});
+            //Create tooltip for texts
+            text.append("title")
+                 .text(function(d, i) {
+                    return formato(d.cant)+" consultas";});
+			
+			//Every time the simulation "ticks", this will be called
+			force.on("tick", function() {
+
+				edges.attr("x1", function(d) { return d.source.x; })
+					 .attr("y1", function(d) { return d.source.y; })
+					 .attr("x2", function(d) { return d.target.x; })
+					 .attr("y2", function(d) { return d.target.y; });
+			
+				nodes.attr("cx", function(d) { return d.x; })
+					 .attr("cy", function(d) { return d.y; });
+              
+                text.attr("x", function(d) { return d.x; })
+					.attr("y", function(d) { return d.y; });
+	
+			});
+
+
+		</script>
+	</body>
+</html>

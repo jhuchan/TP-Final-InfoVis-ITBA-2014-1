@@ -1,0 +1,17 @@
+h1 {
+font-weight: bold;
+font-size: 22px;
+font-family: verdana;
+color: blue;}
+
+p {
+font-weight: normal;
+font-size: 14px;
+font-family: verdana;
+color: black;}
+
+span {
+font-weight: bold;
+font-size: 14px;
+font-family: verdana;
+color: blue;}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      rect.bordered {
+        stroke: #E6E6E6;
+        stroke-width:2px;   
+      }
+
+      text.mono {
+        font-size: 9pt;
+        font-family: verdana;
+        fill: #000;
+      }
+
+      text.axis-workweek {
+        font-weight: bold;
+      }
+
+      text.axis-worktime {
+        font-weight: bold;
+      }
+    </style>
+    <script src="http://d3js.org/d3.v3.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+
+    <script type="text/javascript">
+      var margin = { top: 50, right: 0, bottom: 50, left: 75 },
+          width = 960 - margin.left - margin.right,
+          height = 430 - margin.top - margin.bottom,
+          gridSize = Math.floor(width / 24),
+          legendElementWidth = gridSize*2,
+          buckets = 5,
+          colors = ["#f0f9e8","#bae4bc","#7bccc4","#43a2ca","#0868ac"],
+          days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+          times = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "0"];
+
+      var formato = d3.format(",d");
+
+
+      var data = [
+{day:5,hour:1,value:3251},
+{day:6,hour:1,value:2971},
+{day:7,hour:1,value:2709},
+{day:4,hour:1,value:3205},
+{day:3,hour:1,value:3307},
+{day:6,hour:2,value:1682},
+{day:7,hour:2,value:1799},
+{day:6,hour:3,value:1010},
+{day:7,hour:3,value:926},
+{day:5,hour:4,value:412},
+{day:6,hour:4,value:574},
+{day:7,hour:4,value:519},
+{day:4,hour:4,value:419},
+{day:1,hour:5,value:272},
+{day:3,hour:6,value:207},
+{day:1,hour:7,value:551},
+{day:2,hour:7,value:638},
+{day:6,hour:8,value:732},
+{day:7,hour:8,value:259},
+{day:1,hour:9,value:3977},
+{day:1,hour:10,value:7900},
+{day:6,hour:11,value:4471},
+{day:7,hour:11,value:1897},
+{day:4,hour:11,value:10818},
+{day:5,hour:14,value:10806},
+{day:1,hour:15,value:12367},
+{day:2,hour:15,value:12502},
+{day:6,hour:16,value:5560},
+{day:7,hour:16,value:4053},
+{day:4,hour:16,value:11999},
+{day:3,hour:16,value:12713},
+{day:2,hour:17,value:11846},
+{day:1,hour:18,value:11425},
+{day:6,hour:18,value:4566},
+{day:7,hour:18,value:3491},
+{day:1,hour:19,value:8058},
+{day:1,hour:20,value:6524},
+{day:1,hour:21,value:5814},
+{day:2,hour:22,value:5136},
+{day:2,hour:23,value:4931},
+{day:2,hour:24,value:4229},
+{day:1,hour:1,value:3058},
+{day:2,hour:2,value:1741},
+{day:2,hour:3,value:756},
+{day:1,hour:4,value:405},
+{day:2,hour:4,value:387},
+{day:6,hour:5,value:310},
+{day:7,hour:5,value:295},
+{day:4,hour:5,value:213},
+{day:3,hour:5,value:206},
+{day:5,hour:7,value:605},
+{day:4,hour:7,value:665},
+{day:2,hour:8,value:1697},
+{day:4,hour:9,value:4258},
+{day:2,hour:9,value:4260},
+{day:3,hour:9,value:4347},
+{day:4,hour:10,value:8177},
+{day:2,hour:10,value:8144},
+{day:3,hour:10,value:8556},
+{day:1,hour:11,value:10472},
+{day:2,hour:11,value:10733},
+{day:5,hour:12,value:11992},
+{day:2,hour:12,value:12485},
+{day:5,hour:13,value:12319},
+{day:2,hour:13,value:13087},
+{day:2,hour:14,value:11243},
+{day:5,hour:15,value:11623},
+{day:6,hour:15,value:5954},
+{day:7,hour:15,value:3923},
+{day:4,hour:15,value:11754},
+{day:1,hour:16,value:12765},
+{day:5,hour:17,value:10523},
+{day:6,hour:17,value:4850},
+{day:7,hour:17,value:3946},
+{day:4,hour:18,value:10605},
+{day:3,hour:18,value:10650},
+{day:5,hour:19,value:7836},
+{day:4,hour:19,value:8000},
+{day:5,hour:20,value:7432},
+{day:4,hour:20,value:6888},
+{day:6,hour:21,value:6743},
+{day:7,hour:21,value:5040},
+{day:4,hour:21,value:6133},
+{day:3,hour:21,value:6015},
+{day:5,hour:24,value:3913},
+{day:6,hour:24,value:3414},
+{day:7,hour:24,value:3823},
+{day:2,hour:1,value:3259},
+{day:5,hour:2,value:1613},
+{day:4,hour:2,value:1678},
+{day:3,hour:2,value:1650},
+{day:5,hour:3,value:873},
+{day:4,hour:3,value:798},
+{day:3,hour:3,value:733},
+{day:3,hour:4,value:448},
+{day:5,hour:5,value:220},
+{day:1,hour:6,value:216},
+{day:6,hour:6,value:270},
+{day:2,hour:6,value:230},
+{day:7,hour:7,value:218},
+{day:5,hour:8,value:1696},
+{day:4,hour:8,value:1629},
+{day:3,hour:8,value:1606},
+{day:5,hour:9,value:4524},
+{day:7,hour:9,value:515},
+{day:5,hour:10,value:8063},
+{day:7,hour:10,value:1058},
+{day:5,hour:11,value:10457},
+{day:3,hour:11,value:12199},
+{day:7,hour:12,value:2914},
+{day:4,hour:12,value:12189},
+{day:3,hour:12,value:14512},
+{day:7,hour:13,value:3731},
+{day:4,hour:13,value:12391},
+{day:3,hour:13,value:13351},
+{day:7,hour:14,value:3758},
+{day:4,hour:14,value:11077},
+{day:3,hour:14,value:11590},
+{day:2,hour:16,value:12828},
+{day:1,hour:17,value:12374},
+{day:5,hour:18,value:9956},
+{day:7,hour:19,value:4115},
+{day:7,hour:20,value:4754},
+{day:1,hour:22,value:5342},
+{day:6,hour:22,value:5624},
+{day:1,hour:23,value:5120},
+{day:6,hour:23,value:4198},
+{day:1,hour:24,value:4482},
+{day:1,hour:2,value:1694},
+{day:1,hour:3,value:813},
+{day:2,hour:5,value:221},
+{day:5,hour:6,value:237},
+{day:7,hour:6,value:235},
+{day:4,hour:6,value:231},
+{day:6,hour:7,value:322},
+{day:3,hour:7,value:587},
+{day:1,hour:8,value:1582},
+{day:6,hour:9,value:1655},
+{day:6,hour:10,value:3229},
+{day:1,hour:12,value:12342},
+{day:6,hour:12,value:5451},
+{day:1,hour:13,value:12471},
+{day:6,hour:13,value:5966},
+{day:1,hour:14,value:11383},
+{day:6,hour:14,value:5778},
+{day:3,hour:15,value:12478},
+{day:5,hour:16,value:9631},
+{day:4,hour:17,value:11384},
+{day:3,hour:17,value:12047},
+{day:2,hour:18,value:11170},
+{day:6,hour:19,value:5184},
+{day:2,hour:19,value:7684},
+{day:3,hour:19,value:7936},
+{day:6,hour:20,value:6257},
+{day:2,hour:20,value:6646},
+{day:3,hour:20,value:6506},
+{day:5,hour:21,value:7213},
+{day:2,hour:21,value:5903},
+{day:5,hour:22,value:5827},
+{day:7,hour:22,value:4472},
+{day:4,hour:22,value:5133},
+{day:3,hour:22,value:4903},
+{day:5,hour:23,value:4788},
+{day:7,hour:23,value:4203},
+{day:4,hour:23,value:5011},
+{day:3,hour:23,value:4813},
+{day:4,hour:24,value:4349},
+{day:3,hour:24,value:4314}
+	];
+
+var datarray = Object.keys(data).map(function(k) { return data[k] });
+
+		var colorScale = d3.scale.quantile()
+              .domain([0,
+		   d3.quantile(datarray, 0.25), 
+		   d3.quantile(datarray, 0.5),
+		   d3.quantile(datarray, 0.75),
+		   d3.max(data, function (d) { return d.value; })])
+              .range(colors);
+
+          var svg = d3.select("#chart").append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+          var dayLabels = svg.selectAll(".dayLabel")
+              .data(days)
+              .enter().append("text")
+                .text(function (d) { return d; })
+                .attr("x", 0)
+                .attr("y", function (d, i) { return i * gridSize; })
+                .style("text-anchor", "end")
+                .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
+                .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis"); });
+
+          var timeLabels = svg.selectAll(".timeLabel")
+              .data(times)
+              .enter().append("text")
+                .text(function(d) { return d; })
+                .attr("x", function(d, i) { return i * gridSize; })
+                .attr("y", 0)
+                .style("text-anchor", "middle")
+                .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+                .attr("class", function(d, i) { return ((i >= 8 && i <= 17) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
+
+          var heatMap = svg.selectAll(".hour")
+              .data(data)
+              .enter().append("rect")
+              .attr("x", function(d) { return (d.hour - 1) * gridSize; })
+              .attr("y", function(d) { return (d.day - 1) * gridSize; })
+              .attr("rx", 4)
+              .attr("ry", 4)
+              .attr("class", "hour bordered")
+              .attr("width", gridSize)
+              .attr("height", gridSize)
+              .style("fill", colors[0])
+                .on("mouseover", function(d, i){d3.select(this)
+                  .transition().duration(10)
+                  .attr("x", function(d) { return (d.hour - 1) * gridSize-1; })
+                  .attr("y", function(d) { return (d.day - 1) * gridSize-1; })
+                  .attr("width", gridSize+2)
+                  .attr("height", gridSize+2);})
+                .on("mouseout", function(d, i){d3.select(this)
+				  .transition().duration(10)
+                  .attr("x", function(d) { return (d.hour - 1) * gridSize; })
+                  .attr("y", function(d) { return (d.day - 1) * gridSize; })
+                  .attr("width", gridSize)
+                  .attr("height", gridSize);});
+
+          heatMap.transition().duration(3000)
+              .style("fill", function(d) { return colorScale(d.value); });
+
+          heatMap.append("title").text(function(d) { return formato(d.value)+" consultas promedio"; });
+              
+          var legend = svg.selectAll(".legend")
+              .data([0].concat(colorScale.quantiles()), function(d) { return d; })
+              .enter().append("g")
+              .attr("class", "legend");
+
+          legend.append("rect")
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", height)
+            .attr("width", legendElementWidth)
+            .attr("height", gridSize / 2)
+            .style("fill", function(d, i) { return colors[i]; });
+
+          legend.append("text")
+            .attr("class", "mono")
+            .text(function(d) { return ">= " + formato(Math.round(d)); })
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", height + gridSize);
+    </script>
+  </body>
+</html>

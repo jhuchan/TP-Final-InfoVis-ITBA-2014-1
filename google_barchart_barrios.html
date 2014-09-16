@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Barrio', 'Cantidad de Consultas'],
+          ['PALERMO', 335623],
+          ['RECOLETA', 232330],
+          ['SAN NICOLAS', 208367],
+          ['BALVANERA', 168186],
+          ['CABALLITO', 141560],
+          ['ALMAGRO', 129621],
+          ['BELGRANO', 118143],
+          ['MONSERRAT', 106685],
+          ['VILLA CRESPO', 105518],
+          ['RETIRO', 86456],
+          ['FLORES', 73439],
+          ['VILLA URQUIZA', 59835],
+          ['COLEGIALES', 53205],
+          ['NUÑEZ', 44090],
+          ['VILLA DEVOTO', 39522],
+          ['CHACARITA', 37252],
+          ['CONSTITUCION', 35499],
+          ['SAAVEDRA', 33809],
+          ['BARRACAS', 33772],
+          ['SAN TELMO', 32614],
+          ['SAN CRISTOBAL', 32152],
+          ['BOEDO', 30472],
+          ['VILLA DEL PARQUE', 29400],
+          ['PARQUE CHACABUCO', 26286],
+          ['VILLA ORTUZAR', 23845],
+          ['PARQUE PATRICIOS', 23428],
+          ['MATADEROS', 22656],
+          ['VILLA GRAL. MITRE', 21807],
+          ['VILLA PUEYRREDON', 20748],
+          ['FLORESTA', 18740],
+          ['NUEVA POMPEYA', 18459],
+          ['PATERNAL', 17583],
+          ['LINIERS', 17534],
+          ['VILLA SANTA RITA', 17199],
+          ['VELEZ SARSFIELD', 17194],
+          ['MONTE CASTRO', 15964],
+          ['VILLA LUGANO', 15087],
+          ['BOCA', 14026],
+          ['AGRONOMIA', 13802],
+          ['PARQUE AVELLANEDA', 13480],
+          ['COGHLAN', 12210],
+          ['VILLA LURO', 12021],
+          ['PARQUE CHAS', 11301],
+          ['PUERTO MADERO', 8793],
+          ['VILLA SOLDATI', 8137],
+          ['VILLA REAL', 6321],
+          ['VERSALLES', 5106],
+          ['VILLA RIACHUELO', 4377],
+          ['FUERA DE CAPITAL', 4304],
+          ['Dique 3', 329],
+          ['Dique 4', 194],
+          ['Dique 2', 120],
+          ['Dique 1', 20]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" }]);
+        
+        
+        var options = {
+        bar: {groupWidth: "75%"},
+        legend: { position: "none" },
+        fontSize: 10,
+		fontName: 'verdana',
+		chartArea:{left:120,top:10,width:'100%',height:'100%'}
+      };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+        chart.draw(view, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 600px;"></div>
+  </body>
+</html>

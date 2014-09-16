@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+           <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<title>TP Final InfoVis ITBA 2014/1 - Huchan, Jorge Guillermo y García, Diego</title>
+	</head>
+	<body>
+
+		<h1>TP Final InfoVis ITBA 2014/1 - Huchan, Jorge Guillermo y García, Diego<h1>
+		
+		<p>Visualización del dataset de búsquedas de <span><a target="_blank" href="http://mapa.buenosaires.gob.ar">http://mapa.buenosaires.gob.ar</a></span><p>
+         
+		<p>Nuestro objetivo es analizar el dataset utilizando los mejores gráficos posibles según los datos a mostrar y utilizando herramientas variadas con el fin de mostrar su dominio. La idea es utilizar tanto herramientas gráficas como código.</p>
+		
+		<h2>Dataset completo en un mapa con Tableau</h2>
+		<p>-explicación e implementación-</p>
+		
+		<h2>Top 20, barrios más consultados:</h2>
+		<p>Hecho en D3, con force layout. Tiene interacción con el mouse, mouseover y tooltip.</p>
+		<p>El tamaño del círculo muestra la cantidad de consultas acumuladas. Los barrios están ordenados de mayor a menor.</p>
+		<iframe src="d3_circles_force.html" style="width: 100%; height: 600px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe>
+		
+		<h2>Cantidad de consultas promedio por días y horas:</h2>
+		<p>Hecho en D3. Tiene interacción con el mouse, mouseover y tooltip. Se utilizó una de las paletas de colores de Cynthia Brewer.</p>
+		<p>Este HeatMap muestra en el eje vertical los días de la semana y en el horizontal las horas. Se marca en negrita los días y horarios laborales. Se calculó primero el promedio de consultas recibidas de cada intersección y se definieron 5 "buckets" con su respectiva escala de colores secuencial.</p>
+		<iframe src="day_hour_heatmap.html" style="width: 100%; height: 480px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe>
+		
+		<h2>Cantidad de consultas acumuladas por barrio:</h2>
+		<p>Hecho con Google Charts. Tiene interacción con el mouse, tooltip.</p>
+		<p>Gráfico de barras horizontales, mostrando todos los barrios del dataset y con la cantidad de referencia en forma numérica.</p>
+		<iframe src="google_barchart_barrios.html" style="width: 100%; height: 600px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe>
+		
+		<h2>Visalización real time de la llegada de consultas promedio por franja horaria en días de semana y fines de semana o feriados:</h2>
+		<p>Hecho con Visual Sedimentation.</p>
+		<p>Primero se calculó el promedio y se aplicaron los resultados a la visualización.</p>
+		<iframe src="vsed/examples/worldometers/vsed_weekday.html" style="width: 30%; height: 200px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe>
+		<iframe src="vsed/examples/worldometers/vsed_weekend.html" style="width: 30%; height: 200px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe>
+	</body>
+</html>

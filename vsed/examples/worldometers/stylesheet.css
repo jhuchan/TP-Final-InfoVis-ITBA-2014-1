@@ -1,0 +1,35 @@
+#Manana {
+font-weight: bold;
+font-size: 14px;
+font-family: verdana;
+color: #1F77B4;
+position: fixed;
+left: 10px;
+margin-bottom: 5px;}
+
+#Tarde{
+font-weight: bold;
+font-size: 14px;
+font-family: verdana;
+color: #FF7F0E;
+position: fixed;
+left: 95px;
+margin-bottom: 5px;}
+
+#T_N {
+font-weight: bold;
+font-size: 14px;
+font-family: verdana;
+color: #2CA02C;
+position: fixed;
+left: 175px;
+margin-bottom: 5px;}
+
+#Noche {
+font-weight: bold;
+font-size: 14px;
+font-family: verdana;
+color: #D62728;
+position: fixed;
+left: 240px;
+margin-bottom: 5px;}
