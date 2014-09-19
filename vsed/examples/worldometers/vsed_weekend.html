@@ -35,7 +35,7 @@
      var data=[
          
                 {
-                  label:"Mañana",
+                  label:"Ma\u00f1ana",
                   value:0.0425,
                   unit:oneMinute,
                   size:5,
@@ -140,7 +140,7 @@
     var labeling =function(setting,container){
        var divWidth = Math.round(setting.width/setting.data.model.length)
        for (var i = setting.data.model.length-1; i >= 0 ; i--) {
-         $('#'+container).append('<div id="'+setting.data.model[i].label.replace('/', '_').replace('ñ','n')+'" style="width:'+divWidth+'px;">'+setting.data.model[i].label+'</div>');
+         $('#'+container).append('<div id="'+setting.data.model[i].label.replace('/', '_').replace('\u00f1','n')+'" style="width:'+divWidth+'px;">'+setting.data.model[i].label+'</div>');
        }
     }
 
