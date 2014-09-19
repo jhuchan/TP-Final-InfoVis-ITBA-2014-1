@@ -4,7 +4,7 @@
 
 var scripts = document.getElementsByTagName('script'),
     currentScriptSrc = scripts[scripts.length-1].src, 
-		_vsDirectory = currentScriptSrc.replace('_VisualSedimentation.js', '');
+		_vsDirectory = 'vsed/js/'; //currentScriptSrc.replace('_VisualSedimentation.js', '');
 
 // external Librairy 
 includeJS(_vsDirectory+'lib/d3/d3.v2.js');
