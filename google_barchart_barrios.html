@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta charset="UTF-8">
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
@@ -50,17 +51,16 @@
           ['COGHLAN', 12210],
           ['VILLA LURO', 12021],
           ['PARQUE CHAS', 11301],
-          ['PUERTO MADERO', 8793],
+          ['PUERTO MADERO', 9456],
           ['VILLA SOLDATI', 8137],
           ['VILLA REAL', 6321],
           ['VERSALLES', 5106],
           ['VILLA RIACHUELO', 4377],
-          ['FUERA DE CAPITAL', 4304],
-          ['Dique 3', 329],
-          ['Dique 4', 194],
-          ['Dique 2', 120],
-          ['Dique 1', 20]
+          ['FUERA DE CAPITAL', 4304]
         ]);
+
+var formatter = new google.visualization.NumberFormat({decimalSymbol: '.', fractionDigits: 0});
+  formatter.format(data, 1);
 
         var view = new google.visualization.DataView(data);
         view.setColumns([0, 1,
