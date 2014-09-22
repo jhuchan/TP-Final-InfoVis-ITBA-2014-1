@@ -2,7 +2,7 @@ h1 {
 font-weight: bold;
 font-size: 22px;
 font-family: verdana;
-color: blue;}
+color: black;}
 
 p {
 font-weight: normal;
@@ -10,8 +10,14 @@ font-size: 14px;
 font-family: verdana;
 color: black;}
 
-span {
+p span {
 font-weight: bold;
-font-size: 14px;
+font-size: 10px;
 font-family: verdana;
-color: blue;}
+color: black;}
+
+h1 span {
+font-weight: bold;
+font-size: 22px;
+font-family: verdana;
+color: black;}

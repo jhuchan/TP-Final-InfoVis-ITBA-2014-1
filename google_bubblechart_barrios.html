@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawSeriesChart);
+
+    function drawSeriesChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ["", "Superficie", "Habitantes", "Barrio", "Consultas"],
+        ["", 2123787, 34580, "AGRONOMIA", 13802],
+        ["", 4053354, 139262, "ALMAGRO", 129621],
+        ["", 4343400, 152198, "BALVANERA", 168186],
+        ["", 7913260, 77474, "BARRACAS", 33772],
+        ["", 7934021, 138942, "BELGRANO", 118143],
+        ["", 2843275, 46494, "BOCA", 14026],
+        ["", 2609212, 48520, "BOEDO", 30472],
+        ["", 6854587, 183396, "CABALLITO", 141560],
+        ["", 3119668, 27440, "CHACARITA", 37252],
+        ["", 1280683, 19177, "COGHLAN", 12210],
+        ["", 2289870, 56998, "COLEGIALES", 53205],
+        ["", 2103828, 45860, "CONSTITUCION", 35499],
+        ["", 8598867, 150484, "FLORES", 73439],
+        ["", 2322438, 39473, "FLORESTA", 18740],
+        ["", , , "FUERA DE CAPITAL", 4304],
+        ["", 4124783, 44234, "LINIERS", 17534],
+        ["", 7095970, 64932, "MATADEROS", 22656],
+        ["", 2201842, 43560, "MONSERRAT", 106685],
+        ["", 2627107, 34584, "MONTE CASTRO", 15964],
+        ["", 4971729, 63276, "NUEVA POMPEYA", 18459],
+        ["", 4241247, 53005, "NUÑEZ", 44090],
+        ["", 15781872, 252312, "PALERMO", 335623],
+        ["", 5037463, 54191, "PARQUE AVELLANEDA", 13480],
+        ["", 3835062, 39473, "PARQUE CHACABUCO", 26286],
+        ["", 1385568, 39473, "PARQUE CHAS", 11301],
+        ["", 3745290, 40885, "PARQUE PATRICIOS", 23428],
+        ["", 2230963, 20053, "PATERNAL", 17583],
+        ["", 1732255, 7000, "PUERTO MADERO", 9456],
+        ["", 5315198, 188780, "RECOLETA", 232330],
+        ["", 3254856, 45002, "RETIRO", 86456],
+        ["", 5027970, 51723, "SAAVEDRA", 33809],
+        ["", 2045054, 49986, "SAN CRISTOBAL", 32152],
+        ["", 2294041, 33305, "SAN NICOLAS", 208367],
+        ["", 1233841, 25969, "SAN TELMO", 32614],
+        ["", 2402101, 35963, "VELEZ SARSFIELD", 17194],
+        ["", 1338327, 14178, "VERSALLES", 5106],
+        ["", 3615227, 89859, "VILLA CRESPO", 105518],
+        ["", 3400518, 58573, "VILLA DEL PARQUE", 29400],
+        ["", 6044654, 71013, "VILLA DEVOTO", 39522],
+        ["", 2163774, 36090, "VILLA GRAL. MITRE", 21807],
+        ["", 8719059, 114253, "VILLA LUGANO", 15087],
+        ["", 2567955, 33058, "VILLA LURO", 12021],
+        ["", 1854662, 22591, "VILLA ORTUZAR", 23845],
+        ["", 3174497, 40235, "VILLA PUEYRREDON", 20748],
+        ["", 1156595, 14278, "VILLA REAL", 6321],
+        ["", 3914887, 14960, "VILLA RIACHUELO", 4377],
+        ["", 2154995, 33850, "VILLA SANTA RITA", 17199],
+        ["", 8664763, 41228, "VILLA SOLDATI", 8137],
+        ["", 5451107, 89360, "VILLA URQUIZA", 59835]
+      ]);
+      
+
+      var formatter = new google.visualization.NumberFormat({decimalSymbol: '.', fractionDigits: 0});
+      
+      formatter.format(data, 1);
+      formatter.format(data, 2);
+      formatter.format(data, 4);
+
+      var options = {
+        hAxis: {title: 'Superficie(M2)'},
+        vAxis: {title: 'Habitantes'},
+        legend: { position: "none" },
+        tooltip: {textStyle: {
+        fontSize: 9,
+        fontName: 'Verdana',
+        color: 'black',
+        bold: true,
+        italic: true}},
+        bubble: {textStyle: {
+        fontSize: 9,
+        fontName: 'Verdana',
+        color: 'black',
+        auraColor: 'none',
+        bold: true,
+        italic: true}},
+        chartArea:{left:120,top:10,width:'80%',height:'80%'}
+      };
+
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options);
+    }
+</script>
+  </head>
+  <body>
+    <div id="series_chart_div" style="width: 900px; height: 600px;"></div>
+  </body>
+</html>

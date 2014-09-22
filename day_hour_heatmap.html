@@ -22,7 +22,7 @@
         font-weight: bold;
       }
     </style>
-    <script src="http://d3js.org/d3.v3.js"></script>
+    <script src="d3.v3.js"></script>
   </head>
   <body>
     <div id="chart"></div>
@@ -287,7 +287,7 @@ var datarray = Object.keys(data).map(function(k) { return data[k] });
                   .attr("width", gridSize)
                   .attr("height", gridSize);});
 
-          heatMap.transition().duration(3000)
+          heatMap.transition().duration(1000)
               .style("fill", function(d) { return colorScale(d.value); });
 
           heatMap.append("title").text(function(d) { return formato(d.value)+" consultas promedio"; });

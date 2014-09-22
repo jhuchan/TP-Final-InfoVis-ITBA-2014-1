@@ -8,44 +8,69 @@
 	</head>
 	<body>
 
-		<h1>TP Final InfoVis ITBA 2014/1 - Huchan, Jorge Guillermo y Garc&iacute;a, Diego<h1>
+		<h1>TP Final InfoVis ITBA 2014/1 - <span><a target="_blank" href="http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0Al6DCZQRoT0BdENhRGhxZi1mRDdRTGR3a0RjLWhibEE&font=DroidSerif-DroidSans&maptype=watercolor&lang=es&hash_bookmark=true&start_zoom_adjust=1&height=650">Huchan, Jorge Guillermo</a></span> y Garc&iacute;a, Diego<h1>
 		
-		<p>Visualizaci&oacute;n del dataset de b&uacute;squedas de <span><a target="_blank" href="http://mapa.buenosaires.gob.ar">http://mapa.buenosaires.gob.ar</a></span><p>
+		<p>Visualizaci&oacute;n del dataset de b&uacute;squedas de <span><a target="_blank" href="http://mapa.buenosaires.gob.ar">http://mapa.buenosaires.gob.ar</a></span><p><br/>
          
 		<p>Nuestro objetivo es analizar el dataset utilizando los mejores gr&aacute;ficos posibles seg&uacute;n los datos a mostrar y utilizando herramientas variadas con el fin de mostrar su dominio. La idea es utilizar tanto herramientas gr&aacute;ficas como c&oacute;digo.</p>
 		
-		<h2>Dataset completo en un mapa con Tableau</h2>
-		<p>-explicaci&oacute;n e implementaci&oacute;n-</p>
+		<p>En cada visualizaci&oacute;n haremos una breve explicaci&oacute;n t&eacute;cnica y las conclusiones que se obtienen luego de observar esa visualizaci&oacute;n.</p><br/>
+		<p></p>
+		<h2>Visualizaci&oacute;n del dataset completo en un mapa</h2>
+		<p>Hecho con Tableau Public. Se agrup&oacute; el dataset por barrio y por cada punto (latitud, longitud) &uacute;nico, contando la contidad de consultas en cada uno de ellos. Utilizamos una paleta de 20 colores para representar a todos los barrios, en este caso no es la intenci&oacute;n de tener un c&oacute;digo de color sino que simplemente sea m&aacute;s f&aacute;cil distinguir los barrios. El tama&ntilde;o del punto muestra la cantidad de consultas en esa latitud, longitud.</p>
+		<p>De esta visualizaci&oacute;n podemos ver que las consultas se distribuyen por toda Capital Federal, aunque encontramos tambi&eacute;n algunos puntos fuera de capital. Podemos ver que los puntos de mayor di&aacute;metro se encuentran sobre las principales calles de la ciudad y avenidas.</p>
+		<iframe src="https://public.tableausoftware.com/views/complete_dataset/DatasetCompleto?:embed=y&amp;:showVizHome=no&amp;:showTabs=y" style="width: 100%; height: 600px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+		</iframe><br/>
 		
 		<h2>Top 20, barrios m&aacute;s consultados:</h2>
-		<p>Hecho en D3, con force layout. Tiene interacci&oacute;n con el mouse, mouseover y tooltip.</p>
-		<p>El tama&ntilde;o del c&iacute;rculo muestra la cantidad de consultas acumuladas. Los barrios est&aacute;n ordenados de mayor a menor.</p>
+		<p>Hecho en D3, utilizando un force layout.</p>
+		<p>A pesar de que el mapa nos da una idea general de las consultas, no nos dice qu&eacute; barrio es el m&aacute;s consultado y es muy dif&iacute;cil conocer cu&aacute;ntas consultas recibe cada barrio. En esta visualizaci&oacute;n podemos ver el top 20 de barrios m&aacute;s consultados. Se puede distinguir f&aacute;cilmente que Palermo es el m&aacute;s consultado y al pasar el mouse por el barrio, se muestra la cantidad de consultas acumuladas.</p>
 		<iframe src="d3_circles_force.html" style="width: 100%; height: 600px"
         scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
-        </iframe>
-		
-		<h2>Cantidad de consultas promedio por d&iacute;as y horas:</h2>
-		<p>Hecho en D3. Tiene interacci&oacute;n con el mouse, mouseover y tooltip. Se utiliz&oacute; una de las paletas de colores de Cynthia Brewer.</p>
-		<p>Este HeatMap muestra en el eje vertical los d&iacute;as de la semana y en el horizontal las horas. Se marca en negrita los d&iacute;as y horarios laborales. Se calcul&oacute; primero el promedio de consultas recibidas de cada intersecci&oacute;n y se definieron 5 "buckets" con su respectiva escala de colores secuencial.</p>
-		<iframe src="day_hour_heatmap.html" style="width: 100%; height: 480px"
-        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
-        </iframe>
+        </iframe><br/>
 		
 		<h2>Cantidad de consultas acumuladas por barrio:</h2>
-		<p>Hecho con Google Charts. Tiene interacci&oacute;n con el mouse, tooltip.</p>
-		<p>Gr&aacute;fico de barras horizontales, mostrando todos los barrios del dataset y con la cantidad de referencia en forma num&eacute;rica.</p>
+		<p>Hecho con Google Charts. En este caso elegimos las barras horizontales.</p>
+		<p>El gr&aacute;fico anterior, es atractivo por su dinamismo, pero claramente no es el mejor para mostrar las consultas acumuladas por barrio. Para eso elegimos este gr&aacute;fico de barras horizontales, donde podemos ver claramente todos los barrios y r&aacute;pidamente se distingue el que m&aacute;s consultas recibe y el que menos con sus respectivas proporciones.</p>
 		<iframe src="google_barchart_barrios.html" style="width: 100%; height: 600px"
         scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
-        </iframe>
+        </iframe><br/>
+		
+		<h2>Cantidad de consultas por barrio vs Habitantes vs Superficie (parallel coordinates):</h2>
+		<p>Gr&aacute;fico hecho en Excel. Se tomaron los datos del censo de 2007 para obtener los &iacute;ndices de cada barrio.</p>
+		<p>Si bien el gr&aacute;fico de barras anterior es claro, nos podemos ver como cambian los resultados cuando los evaluamos en base a la cantidad de habitantes y a la superficie de cada barrio. En esta visualizaci&oacute;n de coordenadas paralelas se puede ver como cambia la posici&oacute;n del barrio si lo eval&uacute;o por cantidad de consultas o por los ratios de consultas sobre los habitantes o superficie. Hay resultados l&oacute;gicos y curiosos que no se ve&iacute;an en el gr&aacute;fico de barras, como por ejemplo el de Puerto Madero.</p>
+		<iframe src="parallel_coordinates.jpg" style="width: 100%; height: 900px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe><br/>
+		
+		<h2>Cantidad de consultas por barrio vs Habitantes vs Superficie (burbujas):</h2>
+		<p>Hecho con Google Charts. Se tomaron los mismo datos del gr&aacute; anterior.</p>
+		<p>A pesar de que el gr&aacute;fico anterior nos aplic&oacute; mucho el panorama, tiene un problema, y es que s&oacute;lo nos muestra la variaci&oacute;n de las posiciones de cada barrio y no deja bien en claro a qu&eacute; distancia est&aacute; uno del otro en cada una de las variables. Se intent&oacute; hacer uno de coordenadas paralelas con los valores escalados de cada una de las variables, pero los m&aacute;s grande aparec&iacute;an claros arriba y los m&aacute;s chicos todos mezclados abajo, era inentendible. De ah&iacute; que surge la idea de hacer este de burbujas, donde el eje X es la superficie, el eje Y es la cantidad de habitantes y el tama&ntilde;o de la burbuja es la cantidad de consultas. De esta manera se pueden ver todos los barrios por las 3 dimensiones y qu&eacute; distancia(diferencia) hay entre ellos.</p>
+		<iframe src="google_bubblechart_barrios.html" style="width: 100%; height: 600px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe><br/>
+		
+		<h2>Cantidad de consultas promedio por d&iacute;as y horas:</h2>
+		<p>Hecho en D3. Debido a que la cantidad de d&iacute;as y horas en el dataset no es uniforme, se calcul&oacute; el promedio por cada d&iacute;a y por cada hora para mostrar en el siguiente mapa de calor y que los resultados sean bien comparables.</p>
+		<p>Podemos ver que se hacen m&aacute;s consultas en los d&iacute;as de semana en horario laboral, teniendo un fuerte entre las 12 y 12hs y las 15 y 17hs. Durante los fines de semana las consultas disminuyen, aunque aumentan a las 13 y 15hs del s&aacute;bado y durante la noche del mismo d&iacute;a.</p>
+		<iframe src="day_hour_heatmap.html" style="width: 100%; height: 480px"
+        scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
+        </iframe><br/>
 		
 		<h2>Visalizaci&oacute;n real time de la llegada de consultas promedio por franja horaria en d&iacute;as de semana y fines de semana o feriados:</h2>
-		<p>Hecho con Visual Sedimentation.</p>
-		<p>Primero se calcul&oacute; el promedio y se aplicaron los resultados a la visualizaci&oacute;n.</p>
+		<p>Hecho con Visual Sedimentation. Se calcul&oacute; la cantidad de consultas por segundo promedio por franja horaria en d&iacute;s de semana y feriados y se utiliz&oacute; este n&uacute;mero como valor para cada categor&iacute;a de Visual Sedimentation. Adicionalmente se ajust&oacute; el valor de ttl(time to live) de los puntos para que vayan desapareciendo a medida que llegan los nuevos.</p>
+		<p>Se puede ver de una manera m&aacute;s intuitiva lo que se ve&iacute;a en el heatmap anterior. D&iacute;as de semana se reciben m&aacute;s consultas que en los fines de semana o feriados y, en general en el horario de la tarde.</p>
 		<iframe src="vsed_weekday.html" style="width: 30%; height: 200px"
         scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
         </iframe>
 		<iframe src="vsed_weekend.html" style="width: 30%; height: 200px"
         scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0">
-        </iframe>
+        </iframe><br/>
+		
+		<h2>Conclusiones finales del trabajo y de la cursada:</h2>
+		<p>Con respecto al dataset, hemos hecho varios cortes y an&aacute;lisis que se ven reflejados en los gr&aacute;ficos anteriores, que de otra manera hubieran sido imposibles de realizar con simples tablas como forma de visualizaci&oacute;n.</p>
+		<p>En esta cursada, hemos aprendido a manejar m&uacute;ltiples herramientas y a elegir la mejor visualizaci&oacute; posible para cada tipo de dato o demostraci&oacute;n. Nos llevamos un conocimiento que se ve aplicado en el trabajo y muchos otros para seguir desarrollando con la experiencia y el ienter&eacute;s personal de cada uno.</p><br/><br/>
+		
 	</body>
 </html>
